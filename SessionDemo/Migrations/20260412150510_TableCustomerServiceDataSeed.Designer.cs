@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SessionDemo;
 
@@ -11,9 +12,11 @@ using SessionDemo;
 namespace SessionDemo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260412150510_TableCustomerServiceDataSeed")]
+    partial class TableCustomerServiceDataSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace SessionDemo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Books", (string)null);
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("SessionDemo.Models.BookPublishers", b =>
@@ -51,7 +54,7 @@ namespace SessionDemo.Migrations
 
                     b.HasIndex("BookId");
 
-                    b.ToTable("BookPublishers", (string)null);
+                    b.ToTable("BookPublishers");
                 });
 
             modelBuilder.Entity("SessionDemo.Models.Car", b =>
@@ -68,7 +71,7 @@ namespace SessionDemo.Migrations
 
                     b.HasKey("CarId");
 
-                    b.ToTable("Car", (string)null);
+                    b.ToTable("Car");
                 });
 
             modelBuilder.Entity("SessionDemo.Models.Category", b =>
@@ -85,7 +88,7 @@ namespace SessionDemo.Migrations
 
                     b.HasKey("CategoryId");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("SessionDemo.Models.Course", b =>
@@ -138,7 +141,7 @@ namespace SessionDemo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("SessionDemo.Models.CustomerService", b =>
@@ -149,14 +152,11 @@ namespace SessionDemo.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Cost")
-                        .HasColumnType("int");
-
                     b.HasKey("ServiceId", "CustomerId");
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("CustomerService", (string)null);
+                    b.ToTable("CustomerService");
 
                     b.HasData(
                         new
@@ -224,7 +224,7 @@ namespace SessionDemo.Migrations
                     b.HasIndex("EmployeeId")
                         .IsUnique();
 
-                    b.ToTable("EmployeeCar", (string)null);
+                    b.ToTable("EmployeeCar");
                 });
 
             modelBuilder.Entity("SessionDemo.Models.Order", b =>
@@ -245,7 +245,7 @@ namespace SessionDemo.Migrations
 
                     b.HasIndex("CusId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("SessionDemo.Models.Product", b =>
@@ -267,7 +267,7 @@ namespace SessionDemo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("SessionDemo.Models.Publisher", b =>
@@ -284,7 +284,7 @@ namespace SessionDemo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Publishers", (string)null);
+                    b.ToTable("Publishers");
                 });
 
             modelBuilder.Entity("SessionDemo.Models.Service", b =>
@@ -301,7 +301,7 @@ namespace SessionDemo.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Services", (string)null);
+                    b.ToTable("Services");
 
                     b.HasData(
                         new
@@ -391,7 +391,7 @@ namespace SessionDemo.Migrations
 
                             b1.HasKey("CustomerId");
 
-                            b1.ToTable("Customers", (string)null);
+                            b1.ToTable("Customers");
 
                             b1.WithOwner()
                                 .HasForeignKey("CustomerId");
@@ -443,7 +443,7 @@ namespace SessionDemo.Migrations
 
                             b1.HasKey("EmployeeId");
 
-                            b1.ToTable("Employees", (string)null);
+                            b1.ToTable("Employees");
 
                             b1.WithOwner()
                                 .HasForeignKey("EmployeeId");

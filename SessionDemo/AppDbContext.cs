@@ -9,6 +9,9 @@ namespace SessionDemo
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=.;Database=EFCoreGr;Trusted_Connection=True;TrustServerCertificate=True;");
+            //optionsBuilder.LogTo(Console.WriteLine);
+            //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            optionsBuilder.UseLazyLoadingProxies(x => x.IgnoreNonVirtualNavigations());
         }
 
         public DbSet<Product> Products { get; set; }
@@ -19,6 +22,8 @@ namespace SessionDemo
         public DbSet<Book> Books { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Service> Services { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -59,6 +64,53 @@ namespace SessionDemo
                 .WithMany()
                 .HasForeignKey(e => e.ManagerId)
                 .OnDelete(DeleteBehavior.NoAction);    // Avoid cycles in SQL Server
+
+            #region Shadow Properties
+
+            modelBuilder.Entity<Customer>(EB =>
+                      {
+                          EB.Property<DateTime>("CreatedAt");
+                          EB.Property<DateTime>("UpdatedAt");
+                          EB.Property<string>("LastModifiedBy");
+                      });
+
+            #endregion
+
+            #region Owned Entity Types
+
+
+            modelBuilder.Entity<Customer>(EB =>
+            {
+                EB.OwnsOne(c => c.ShippingAddress, a =>
+                {
+                    a.Property(x => x.Street).HasColumnName("ShippingStreet");
+                    a.Property(x => x.City).HasColumnName("ShippingCity");
+                });
+
+            });
+
+            modelBuilder.Entity<Employee>(EB =>
+            {
+                EB.OwnsOne(e => e.HomeAddress);
+            });
+
+            #endregion
+
+            #region Data Seeding
+
+            modelBuilder.Entity<Service>().HasData(
+                new Service { Id = 1, Name = "Service01" },
+                new Service { Id = 2, Name = "Service02" },
+                new Service { Id = 3, Name = "Service03" }
+            );
+
+            modelBuilder.Entity<CustomerService>().HasData(
+                new CustomerService { CustomerId = 1, ServiceId = 1 },
+                new CustomerService { CustomerId = 1, ServiceId = 2 },
+                new CustomerService { CustomerId = 2, ServiceId = 2 },
+                new CustomerService { CustomerId = 3, ServiceId = 3 }
+            );
+            #endregion
         }
     }
 }
