@@ -149,9 +149,6 @@ namespace SessionDemo.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Cost")
-                        .HasColumnType("int");
-
                     b.HasKey("ServiceId", "CustomerId");
 
                     b.HasIndex("CustomerId");
