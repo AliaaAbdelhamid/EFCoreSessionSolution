@@ -13,5 +13,7 @@ namespace SessionDemo.Models
         public int ServiceId { get; set; } // FK to Service
         public Customer Customer { get; set; } = default!;
         public int CustomerId { get; set; } // FK to Customer
+
+        public int? Cost { get; set; }
     }
 }

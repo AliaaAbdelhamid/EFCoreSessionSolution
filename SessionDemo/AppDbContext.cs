@@ -11,6 +11,7 @@ namespace SessionDemo
             optionsBuilder.UseSqlServer("Server=.;Database=EFCoreGr;Trusted_Connection=True;TrustServerCertificate=True;");
             //optionsBuilder.LogTo(Console.WriteLine);
             //optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            optionsBuilder.UseLazyLoadingProxies(x => x.IgnoreNonVirtualNavigations());
         }
 
         public DbSet<Product> Products { get; set; }

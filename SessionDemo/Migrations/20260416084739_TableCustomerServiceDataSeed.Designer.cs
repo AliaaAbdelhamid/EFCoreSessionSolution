@@ -12,8 +12,8 @@ using SessionDemo;
 namespace SessionDemo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260412143438_TableServiceDataSeed")]
-    partial class TableServiceDataSeed
+    [Migration("20260416084739_TableCustomerServiceDataSeed")]
+    partial class TableCustomerServiceDataSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,6 +157,28 @@ namespace SessionDemo.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("CustomerService");
+
+                    b.HasData(
+                        new
+                        {
+                            ServiceId = 1,
+                            CustomerId = 1
+                        },
+                        new
+                        {
+                            ServiceId = 2,
+                            CustomerId = 1
+                        },
+                        new
+                        {
+                            ServiceId = 2,
+                            CustomerId = 2
+                        },
+                        new
+                        {
+                            ServiceId = 3,
+                            CustomerId = 3
+                        });
                 });
 
             modelBuilder.Entity("SessionDemo.Models.Employee", b =>

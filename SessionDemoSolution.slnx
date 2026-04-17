@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="InheritanceStrategies/InheritanceStrategies.csproj" Id="c9295fbe-f7f0-4ef0-b5d2-41f937ffb2b7" />
   <Project Path="SessionDemo/SessionDemo.csproj" />
 </Solution>

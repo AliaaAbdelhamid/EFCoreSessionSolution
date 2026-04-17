@@ -204,7 +204,328 @@
 
             #endregion
 
+            #region Loading Related Data
 
+            #region Problem 
+            //var order = dbContext.Orders.FirstOrDefault(x => x.Id == 1);
+
+            //if (order != null)
+            //{
+            //    Console.WriteLine($"Order Id : {order.Id}"); // 1
+            //    Console.WriteLine($"Order Number : {order.Number}"); // 1
+            //    Console.WriteLine($"Order Customer Id : {order.CusId}"); // 1
+            //    Console.WriteLine($"Order Customer Id : {order.OrderCustomer.Id}"); // Exception
+            //    Console.WriteLine($"Order Customer Name : {order.OrderCustomer.Name}"); // Exception
+            //}
+            #endregion
+
+            #region Solutions
+
+            #region Eager Loading 
+
+            #region Include()
+            ////var order = dbContext.Orders.Include(x => x.OrderCustomer).FirstOrDefault(x => x.Id == 1);
+            ////if (order != null)
+            ////{
+            ////    Console.WriteLine($"Order Id : {order.Id}"); // 1
+            ////    Console.WriteLine($"Order Number : {order.Number}"); // 1
+            ////    Console.WriteLine($"Order Customer Id : {order.CusId}"); // 1
+            ////    Console.WriteLine($"Order Customer Id : {order.OrderCustomer.Id}"); // 1
+            ////    Console.WriteLine($"Order Customer Name : {order.OrderCustomer.Name}"); // Ahmed Mohamed
+            ////}
+
+
+            //var customer = dbContext.Customers.Include(x => x.Orders).Include(x => x.CustomerServices).FirstOrDefault(x => x.Id == 1);
+            //if (customer != null)
+            //{
+            //    Console.WriteLine($"Customer Name : {customer.Name}"); // Ahmed Mohamed
+            //    Console.WriteLine($"Customer Orders Count : {customer.Orders.Count}"); // 2
+            //    Console.WriteLine($"Customer Services Count : {customer.CustomerServices.Count}"); // 2
+            //} 
+            #endregion
+
+            #region ThenInclude()
+
+            //var customer = dbContext.Customers.Include(x => x.CustomerServices).ThenInclude(cs => cs.Service).FirstOrDefault(x => x.Id == 1);
+            //if (customer != null)
+            //{
+            //    Console.WriteLine($"Customer Name : {customer.Name}"); // Ahmed Mohamed
+            //    Console.WriteLine($"Customer Services Count : {customer.CustomerServices.Count}"); // 2
+            //    foreach (var customerService in customer.CustomerServices)
+            //    {
+            //        Console.WriteLine($"Service Name : {customerService.Service.Name}"); // Service 01 , Service 02
+            //    }
+            //}
+            #endregion
+
+            #region Filtered Include 
+            //var customer = dbContext.Customers.Include(x => x.CustomerServices.Where(x => x.Cost <= 10)).ThenInclude(cs => cs.Service).FirstOrDefault(x => x.Id == 1);
+            //if (customer != null)
+            //{
+            //    Console.WriteLine($"Customer Name : {customer.Name}"); // Ahmed Mohamed
+            //    Console.WriteLine($"Customer Services Count : {customer.CustomerServices.Count}"); // 1
+            //    foreach (var customerService in customer.CustomerServices)
+            //    {
+            //        Console.WriteLine($"Service Name : {customerService.Service.Name}"); // Service 01 
+            //    }
+            //}
+            #endregion
+
+            #region AsSplitQuery()
+            //var customer = dbContext.Customers.Include(x => x.CustomerServices.Where(x => x.Cost <= 10))
+            //                                 .ThenInclude(cs => cs.Service)
+            //                                 .Include(x => x.Orders)
+            //                                 .AsSplitQuery()
+            //                                 .FirstOrDefault(x => x.Id == 1);
+            //if (customer != null)
+            //{
+            //    Console.WriteLine($"Customer Name : {customer.Name}"); // Ahmed Mohamed
+            //    Console.WriteLine($"Customer Services Count : {customer.CustomerServices.Count}"); // 1
+            //    foreach (var customerService in customer.CustomerServices)
+            //    {
+            //        Console.WriteLine($"Service Name : {customerService.Service.Name}"); // Service 01 
+            //    }
+            //}
+            #endregion
+
+            #endregion
+
+            #region Explicit Loading
+
+            #region Reference()
+            //var order = dbContext.Orders.FirstOrDefault(x => x.Id == 1);
+
+            //if (order != null)
+            //{
+            //    Console.WriteLine($"Order Customer Id   Before loading: {order.CusId}"); // 1
+            //    Console.WriteLine($"Order Customer Id   Before loading: {order.OrderCustomer?.Id}"); // NULL
+            //    Console.WriteLine($"Order Customer Name Before loading: {order.OrderCustomer?.Name}"); // NULL
+            //    dbContext.Entry(order).Reference(o => o.OrderCustomer).Load();
+            //    Console.WriteLine($"Order Customer Id   After loading: {order.CusId}"); // 1
+            //    Console.WriteLine($"Order Customer Id   After loading: {order.OrderCustomer?.Id}"); // 1
+            //    Console.WriteLine($"Order Customer Name After loading: {order.OrderCustomer?.Name}"); // Ahmed Mohamed
+            //} 
+            #endregion
+
+            #region Collection()
+
+            //var customer = dbContext.Customers.FirstOrDefault(x => x.Id == 1);
+
+            //if (customer != null)
+            //{
+            //    Console.WriteLine($"Customer Name : {customer.Name}"); // Ahmed Mohamed
+
+            //    dbContext.Entry(customer).Collection(c => c.Orders).Load(); // Load Orders collection
+            //    foreach (var order in customer.Orders) // Orders loaded after calling Load()
+            //    {
+            //        Console.WriteLine($"Order Number : {order.Number}");
+            //    }
+
+
+            //}
+
+            #endregion
+
+            #region Filtered Collection with Query()
+
+            //var customer = dbContext.Customers.FirstOrDefault(x => x.Id == 1);
+
+            //if (customer != null)
+            //{
+            //    Console.WriteLine($"Customer Name : {customer.Name}"); // Ahmed Mohamed
+
+            //    dbContext.Entry(customer).Collection(c => c.Orders).Query().Where(x => x.Number >= 2).Load();
+
+            //    foreach (var order in customer.Orders) // Orders loaded after calling Load()
+            //    {
+            //        Console.WriteLine($"Order Number : {order.Number}");
+            //    }
+            //}
+
+            #endregion
+
+            #endregion
+
+            #region Lazy Loading 
+
+            //var order = dbContext.Orders.FirstOrDefault(x => x.Id == 1);
+
+            //if (order != null)
+            //{
+            //    Console.WriteLine($"Order Number : {order.Number}"); // 1
+            //    Console.WriteLine($"Order Customer Id : {order.CusId}"); // 1
+            //    Console.WriteLine($"Order Customer Name : {order.OrderCustomer?.Name}"); // NULL
+            //}
+
+
+            //var customer = dbContext.Customers.FirstOrDefault(x => x.Id == 1);
+            //if (customer != null)
+            //{
+            //    Console.WriteLine($"Customer Name : {customer.Name}"); // Ahmed Mohamed
+            //    Console.WriteLine($"Customer Orders Count : {customer.Orders.Count}"); // 2
+            //}
+
+
+            #endregion
+
+            #endregion
+            #endregion
+
+            #region Join LINQ Category
+
+            #region Inner Join 
+
+            //var result = from o in dbContext.Orders
+            //             join c in dbContext.Customers
+            //             on o.CusId equals c.Id
+            //             select new
+            //             {
+            //                 CustomerName = c.Name,
+            //                 OrderNumber = o.Number
+            //             };
+
+
+            //result = dbContext.Orders.Join(dbContext.Customers, o => o.CusId, c => c.Id, (o, c) => new
+            //{
+            //    CustomerName = c.Name,
+            //    OrderNumber = o.Number
+            //});
+
+            //foreach (var item in result)
+            //    Console.WriteLine(item);
+
+
+
+
+
+            #endregion
+
+            #region Group Join 
+
+            #region Example 01
+            //var result = dbContext.Customers.GroupJoin(dbContext.Orders, c => c.Id, o => o.CusId, (c, os) => new
+            //{
+            //    CustomerName = c.Name,
+            //    Orders = os
+            //}).Where(x => x.Orders.Count() > 2);
+
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine($"Customer Name = {item.CustomerName}");
+            //    foreach (var order in item.Orders)
+            //    {
+            //        Console.WriteLine($" Order #{order.Number}");
+            //    }
+            //}
+
+            #endregion
+
+            #region Example 02
+            //var result = dbContext.Customers.GroupJoin(dbContext.Orders, c => c.Id, o => o.CusId, (c, o) => new
+            //{
+            //    CustomerName = c.Name,
+            //    OrdersCount = o.Count()
+
+            //});
+
+
+            //foreach (var item in result)
+            //    Console.WriteLine(item); 
+            #endregion
+
+            #region Query Syntax
+
+            //var result = from c in dbContext.Customers
+            //             join o in dbContext.Orders
+            //             on c.Id equals o.CusId
+            //             into Groups
+            //             where Groups.Count() > 2
+            //             select new
+            //             {
+            //                 CustomerName = c.Name,
+            //                 Orders = Groups
+            //             };
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine($"Customer Name = {item.CustomerName}");
+            //    foreach (var order in item.Orders)
+            //    {
+            //        Console.WriteLine($" Order #{order.Number}");
+            //    }
+            //}
+
+            #endregion
+
+            #endregion
+
+            #region Left Join 
+
+            //var result = dbContext.Customers.LeftJoin(dbContext.Orders, c => c.Id, o => o.CusId, (c, o) => new
+            //{
+            //    CustomerName = c.Name,
+            //    OrderNumber = o == null ? 0 : o.Number,
+            //});
+
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+
+            #region Left Join Pre .Net 10
+
+            //var result = dbContext.Customers.GroupJoin(dbContext.Orders, c => c.Id, o => o.CusId, (c, os) => new
+            //{
+            //    CustomerName = c.Name,
+            //    Orders = os
+            //}).SelectMany(x => x.Orders.DefaultIfEmpty(), (x, o) => new
+            //{
+            //    CustomerName = x.CustomerName,
+            //    OrderNumber = o == null ? 0 : o.Number,
+            //});
+
+
+            //result = from c in dbContext.Customers
+            //         join o in dbContext.Orders
+            //         on c.Id equals o.Id
+            //         into OrderGroups
+            //         from o in OrderGroups.DefaultIfEmpty()
+            //         select new
+            //         {
+            //             CustomerName = c.Name,
+            //             OrderNumber = o == null ? 0 : o.Number,
+            //         };
+
+            //foreach (var item in result)
+            //{
+            //    Console.WriteLine(item);
+            //}
+            #endregion
+
+
+
+
+            #endregion
+
+            #region Cross Join 
+
+            //var result = dbContext.Customers.SelectMany(c => dbContext.Orders, (c, o) => new { c.Name, o.Number });
+
+            //result = from c in dbContext.Customers
+            //         from o in dbContext.Orders
+            //         select new
+            //         {
+            //             c.Name,
+            //             o.Number
+            //         };
+            //foreach (var item in result)
+            //    Console.WriteLine(item);
+
+            #endregion
+
+            #endregion
         }
     }
 }
