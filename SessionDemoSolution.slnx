@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="DatabaseFirst/DatabaseFirst.csproj" Id="d622118b-455c-4303-ab1e-9406750ab455" />
   <Project Path="InheritanceStrategies/InheritanceStrategies.csproj" Id="c9295fbe-f7f0-4ef0-b5d2-41f937ffb2b7" />
   <Project Path="SessionDemo/SessionDemo.csproj" />
 </Solution>
